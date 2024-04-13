@@ -10,9 +10,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 
 public class FrontendDeveloperTests extends ApplicationTest{
 
+
+	/**
+	 * Runs frontend before each test
+	 *
+	 */
 	@BeforeEach
     	public void setup() throws Exception {
 	ApplicationTest.launch(App.class);
@@ -27,7 +33,6 @@ public class FrontendDeveloperTests extends ApplicationTest{
 	public void test1(){
 		ClickOn("#start").write("Memorial Union");
 		ClickOn("#end").write("Computer Science");
-
 		Label path = lookup("#path").query();
 		Assertions.assertEquals("Result List:", path.getText());
 		ClickOn("#find");
@@ -44,7 +49,8 @@ public class FrontendDeveloperTests extends ApplicationTest{
 	 */
 	@Test
         public void test2(){
-
+		ClickOn("#start").write("Mem");
+                ClickOn("#end").write("Computer Science");
                 Label path = lookup("#path").query();
                 Assertions.assertEquals("Result List:", path.getText());
                 ClickOn("#find");
@@ -61,8 +67,6 @@ public class FrontendDeveloperTests extends ApplicationTest{
         public void test3(){
 		ClickOn("#start").write("Memorial Union");
                 ClickOn("#end").write("Computer Science");
-	
-
                 Label path = lookup("#path").query();
                 Assertions.assertEquals("Result List:", path.getText());
 		ClickOn("#travelTimesBox"); 
