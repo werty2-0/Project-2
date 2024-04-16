@@ -1,0 +1,25 @@
+digraph G {
+
+    // this is the graph from the lecture
+
+    "A" -> "C" [seconds=1.0];
+    "C" -> "A" [seconds=1.0];
+
+    "B" -> "E" [seconds=1.0];
+    "E" -> "B" [seconds=1.0];
+
+    "B" -> "D" [seconds=2.0];
+    "D" -> "B" [seconds=2.0];
+
+    "A" -> "D" [seconds=4.0];
+    "D" -> "A" [seconds=4.0];
+
+    "C" -> "E" [seconds=10.0];
+    "E" -> "C" [seconds=10.0];
+
+    "D" -> "E" [seconds=10.0];
+    "E" -> "D" [seconds=10.0];
+
+    "A" -> "B" [seconds=15.0];
+    "B" -> "A" [seconds=15.0];
+}

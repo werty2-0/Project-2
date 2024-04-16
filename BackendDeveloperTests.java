@@ -1,36 +1,51 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class BackendDeveloperTests {
 
   /**
+   * Additional test method for the loadGraphData method in the BackendInterface.
+   */
+  @Test
+  public void testLoadGraphData() {
+    BackendInterface backend = new Backend(new GraphPlaceholder());
+    try {
+      backend.loadGraphData("src" + File.separator + "campus.dot");
+    } catch (IOException e) {
+      Assertions.fail("Exception thrown when loading graph data");
+    }
+    // now try an invalid file
+    try {
+      backend.loadGraphData("src" + File.separator + "adjfklasdjfklasdjfkldajsffjkldafdd");
+      Assertions.fail("No exception thrown when loading invalid file");
+    } catch (IOException e) {
+      // expected
+    }
+  }
+
+  /**
    * Test method for getListOfAllLocations method in the BackendInterface.
    */
   @Test
   public void testList() {
-    // create a graph and add some locations
     GraphADT<String, Double> graph = new GraphPlaceholder();
-    graph.insertNode("A");
-    graph.insertNode("B");
-    graph.insertNode("C");
-    graph.insertNode("D");
-
-    graph.insertEdge("A", "B", 1.0);
-    graph.insertEdge("A", "D", 3.0);
-    graph.insertEdge("B", "C", 2.0);
-    graph.insertEdge("D", "A", 3.0);
-
-    // now create a backend
-    BackendInterface backend = new BackendPlaceholder(graph);
+    // now create a backend, remember to replace it with the actual Backend object and not the placeholder
+    BackendInterface backend = new Backend(graph);
+    try {
+      backend.loadGraphData("src" + File.separator + "graph1.dot");
+    } catch (IOException e) {
+      Assertions.fail("Error loading graph data, not caused by getListOfAllLocations method");
+    }
     // call the method and ensure output matches expected
-    List<String> locations = backend.getListOfAllLocations();
+    List<String> actual = backend.getListOfAllLocations();
     List<String> expected = Arrays.asList("A", "B", "C", "D");
     // for each location, ensure it is in the expected list
     for (String location : expected) {
-      Assertions.assertTrue(locations.contains(location));
+      Assertions.assertTrue(actual.contains(location), "List of locations does not contain " + location);
     }
   }
 
@@ -40,13 +55,17 @@ public class BackendDeveloperTests {
   @Test
   public void testShortestPath() {
     // create a graph and add some locations
-    GraphADT<String, Double> graph = lectureGraph();
-
-    BackendInterface backend = new BackendPlaceholder(graph);
+    GraphADT<String, Double> graph = new GraphPlaceholder();
+    BackendInterface backend = new Backend(graph); // verify with TA that we replace with Backend ??
+    try {
+      backend.loadGraphData("src" + File.separator + "graph2.dot");
+    } catch (IOException e) {
+      Assertions.fail("Error loading graph data, not caused by findShortestPath method");
+    }
     // test the correct path is outputted
-    Assertions.assertEquals(backend.findShortestPath("A", "E"), Arrays.asList("A", "D", "B", "E"));
+    Assertions.assertEquals(Arrays.asList("A", "D", "B", "E"), backend.findShortestPath("A", "E"));
     // test that an empty list is outputted for a path that doesn't exist
-    Assertions.assertEquals(backend.findShortestPath("A", "F"), Arrays.asList());
+    Assertions.assertEquals(Arrays.asList(), backend.findShortestPath("A", "F"));
   }
 
   /**
@@ -54,35 +73,51 @@ public class BackendDeveloperTests {
    */
   @Test
   public void testTravelTimes() {
-    GraphADT<String, Double> graph = lectureGraph();
+    GraphADT<String, Double> graph = new GraphPlaceholder();
 
-    BackendInterface backend = new BackendPlaceholder(graph);
-    // since no path was created in the graph object, the travel times should be empty
-    Assertions.assertEquals(backend.getTravelTimesOnPath("A", "E"), Arrays.asList());
+    BackendInterface backend = new Backend(graph);
+    try {
+      backend.loadGraphData("src" + File.separator + "graph2.dot");
+    } catch (IOException e) {
+      Assertions.fail("Error while loading graph data");
+    }
     // now create a path and test the travel times
     backend.findShortestPath("A", "E");
-    Assertions.assertEquals(backend.getTravelTimesOnPath("A", "E"), Arrays.asList(4.0, 2.0, 1.0));
+    Assertions.assertEquals(Arrays.asList(4.0, 2.0, 1.0), backend.getTravelTimesOnPath("A", "E"));
   }
 
   @Test
   public void testVia() {
-    GraphADT<String, Double> graph1 = lectureGraph();
+    GraphADT<String, Double> graph1 = new GraphPlaceholder();
     // test findShortestPathVia
-    BackendInterface backend1 = new BackendPlaceholder(graph1);
+    BackendInterface backend1 = new Backend(graph1);
+    try {
+      backend1.loadGraphData("src" + File.separator + "graph2.dot");
+    } catch (IOException e) {
+      Assertions.fail("Error while loading graph data");
+    }
+
     // test the correct path is outputted
-    Assertions.assertEquals(backend1.findShortestPathVia("A", "C", "E"), Arrays.asList("A", "C", "E"));
-    Assertions.assertEquals(backend1.findShortestPathVia("A", "D", "E"), Arrays.asList("A", "D", "B", "E"));
+    Assertions.assertEquals(Arrays.asList("A", "D", "B", "E"), backend1.findShortestPathVia("A", "D", "E"));
     // test that an empty list is outputted for a path that doesn't exist
-    Assertions.assertEquals(backend1.findShortestPathVia("A", "F", "E"), Arrays.asList());
+    Assertions.assertEquals(Arrays.asList(), backend1.findShortestPathVia("A", "F", "E"));
 
     // then test getTravelTimesOnPathVia with a new graph
-    GraphADT<String, Double> graph2 = lectureGraph();
-    BackendInterface backend2 = new BackendPlaceholder(graph2);
-    // since no path was created in the graph object, ensure that the travel times are be empty
-    Assertions.assertEquals(backend2.getTravelTimesOnPathVia("A", "C", "E"), Arrays.asList());
-    // now create a path and check the travel times
+    GraphADT<String, Double> graph2 = new GraphPlaceholder();
+    BackendInterface backend2 = new Backend(graph2);
+    try {
+      backend2.loadGraphData("src" + File.separator + "graph2.dot");
+    } catch (IOException e) {
+      Assertions.fail("Error while loading graph data");
+    }
+    // now test the via travel times method
+    // create a path and check the travel times
     backend2.findShortestPathVia("A", "C", "E");
-    Assertions.assertEquals(backend2.getTravelTimesOnPathVia("A", "C", "E"), Arrays.asList(1.0, 10.0));
+    Assertions.assertEquals(Arrays.asList(1.0, 10.0), backend2.getTravelTimesOnPathVia("A", "C", "E"));
+    // once again, ensure an empty list is returned for a path that doesn't exist
+    Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("A", "B", "G"));
+    Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("A", "P", "E"));
+    Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("G", "B", "P"));
   }
 
   private GraphADT<String, Double> lectureGraph() {
