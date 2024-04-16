@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Backend for the Campus Map project.
+ */
 public class Backend implements BackendInterface {
 
   private GraphADT<String, Double> graph;
@@ -61,10 +64,22 @@ public class Backend implements BackendInterface {
     br.close();
   }
 
+  /**
+   * Gets a list of all locations in the graph.
+   *
+   * @return a list of all locations in the graph
+   */
   public List<String> getListOfAllLocations() {
     return locations;
   }
 
+  /**
+   * Finds the shortest path between two locations.
+   *
+   * @param startLocation the start location of the path
+   * @param endLocation   the end location of the path
+   * @return a list of locations representing the shortest path between the start and end locations
+   */
   public List<String> findShortestPath(String startLocation, String endLocation) {
     // if either location is not in the list of locations, return an empty list
     if (!locations.contains(startLocation) || !locations.contains(endLocation)) {
@@ -73,6 +88,13 @@ public class Backend implements BackendInterface {
     return Arrays.asList("A", "D", "B", "E");
   }
 
+  /**
+   * Gets the travel times between locations on a path.
+   *
+   * @param startLocation the start location of the path
+   * @param endLocation   the end location of the path
+   * @return a list of travel times between locations on the path
+   */
   public List<Double> getTravelTimesOnPath(String startLocation, String endLocation) {
     if (!locations.contains(startLocation) || !locations.contains(endLocation)) {
       return Arrays.asList();
@@ -80,6 +102,14 @@ public class Backend implements BackendInterface {
     return Arrays.asList(4.0, 2.0, 1.0);
   }
 
+  /**
+   * Finds the shortest path between two locations that passes through a third location.
+   *
+   * @param startLocation the start location of the path
+   * @param via           a location that the path show lead through
+   * @param endLocation   the end location of the path
+   * @return a list of locations representing the shortest path between the start and end locations
+   */
   public List<String> findShortestPathVia(String startLocation, String via, String endLocation) {
     if (!locations.contains(startLocation) || !locations.contains(via) || !locations.contains(endLocation)) {
       return Arrays.asList();
@@ -87,6 +117,14 @@ public class Backend implements BackendInterface {
     return Arrays.asList("A", "D", "B", "E");
   }
 
+  /**
+   * Gets the travel times between locations on a path that passes through a third location.
+   *
+   * @param startLocation the start location of the path
+   * @param via           a location that the path show lead through
+   * @param endLocation   the end location of the path
+   * @return a list of travel times between locations on the path
+   */
   public List<Double> getTravelTimesOnPathVia(String startLocation, String via, String endLocation) {
     if (!locations.contains(startLocation) || !locations.contains(via) || !locations.contains(endLocation)) {
       return Arrays.asList();

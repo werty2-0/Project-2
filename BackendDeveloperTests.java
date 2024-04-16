@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Testers for the Backend class. These tests are designed to test the Backend class and its methods.
+ */
 public class BackendDeveloperTests {
 
   /**
@@ -86,6 +89,9 @@ public class BackendDeveloperTests {
     Assertions.assertEquals(Arrays.asList(4.0, 2.0, 1.0), backend.getTravelTimesOnPath("A", "E"));
   }
 
+  /**
+   * Test method for findShortestPathVia and getTravelTimesOnPathVia methods in the BackendInterface.
+   */
   @Test
   public void testVia() {
     GraphADT<String, Double> graph1 = new GraphPlaceholder();
