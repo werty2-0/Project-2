@@ -23,11 +23,6 @@ public class Backend implements BackendInterface {
     // list of locations will be filled when reading in graph data
     locations = new ArrayList<>();
     System.out.println("graph and locations initialized");
-//    try {
-//      loadGraphData("src/campus.dot");
-//    } catch (IOException e) {
-//      System.out.println("Error loading graph data");
-//    }
   }
 
   /**

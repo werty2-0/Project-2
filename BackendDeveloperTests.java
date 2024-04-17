@@ -17,13 +17,13 @@ public class BackendDeveloperTests {
   public void testLoadGraphData() {
     BackendInterface backend = new Backend(new GraphPlaceholder());
     try {
-      backend.loadGraphData("src" + File.separator + "campus.dot");
+      backend.loadGraphData("campus.dot");
     } catch (IOException e) {
       Assertions.fail("Exception thrown when loading graph data");
     }
     // now try an invalid file
     try {
-      backend.loadGraphData("src" + File.separator + "adjfklasdjfklasdjfkldajsffjkldafdd");
+      backend.loadGraphData("adjfklasdjfklasdjfkldajsffjkldafdd");
       Assertions.fail("No exception thrown when loading invalid file");
     } catch (IOException e) {
       // expected
@@ -39,7 +39,7 @@ public class BackendDeveloperTests {
     // now create a backend, remember to replace it with the actual Backend object and not the placeholder
     BackendInterface backend = new Backend(graph);
     try {
-      backend.loadGraphData("src" + File.separator + "graph1.dot");
+      backend.loadGraphData("graph1.dot");
     } catch (IOException e) {
       Assertions.fail("Error loading graph data, not caused by getListOfAllLocations method");
     }
@@ -61,7 +61,7 @@ public class BackendDeveloperTests {
     GraphADT<String, Double> graph = new GraphPlaceholder();
     BackendInterface backend = new Backend(graph); // verify with TA that we replace with Backend ??
     try {
-      backend.loadGraphData("src" + File.separator + "graph2.dot");
+      backend.loadGraphData("graph2.dot");
     } catch (IOException e) {
       Assertions.fail("Error loading graph data, not caused by findShortestPath method");
     }
@@ -80,7 +80,7 @@ public class BackendDeveloperTests {
 
     BackendInterface backend = new Backend(graph);
     try {
-      backend.loadGraphData("src" + File.separator + "graph2.dot");
+      backend.loadGraphData("graph2.dot");
     } catch (IOException e) {
       Assertions.fail("Error while loading graph data");
     }
@@ -98,7 +98,7 @@ public class BackendDeveloperTests {
     // test findShortestPathVia
     BackendInterface backend1 = new Backend(graph1);
     try {
-      backend1.loadGraphData("src" + File.separator + "graph2.dot");
+      backend1.loadGraphData("graph2.dot");
     } catch (IOException e) {
       Assertions.fail("Error while loading graph data");
     }
@@ -112,7 +112,7 @@ public class BackendDeveloperTests {
     GraphADT<String, Double> graph2 = new GraphPlaceholder();
     BackendInterface backend2 = new Backend(graph2);
     try {
-      backend2.loadGraphData("src" + File.separator + "graph2.dot");
+      backend2.loadGraphData("graph2.dot");
     } catch (IOException e) {
       Assertions.fail("Error while loading graph data");
     }
