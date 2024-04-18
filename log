@@ -1,4 +1,4 @@
-Script started on 2024-04-17 22:40:29-05:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="204" LINES="55"]
+Script started on 2024-04-17 22:48:25-05:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="204" LINES="55"]
 [?2004h[gouraram@royal-30] (1)$ git status
 [?2004lOn branch frontend
 Your branch is up to date with 'origin/frontend'.
@@ -10,12 +10,12 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [?2004h[gouraram@royal-30] (2)$ git log -1
-[?2004l[?1h=[33mcommit 554d0d691748cdf49857ee0f899a617c206ee6b0[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m, [m[1;31morigin/frontend[m[33m)[m[m
+[?2004l[?1h=[33mcommit 534698ae91ae73cbca98eea5b508da55f30933f7[m[33m ([m[1;36mHEAD -> [m[1;32mfrontend[m[33m, [m[1;31morigin/frontend[m[33m)[m[m
 Author: PARIN REDDY GOURARAM <pgouraram@wisc.edu>[m
-Date:   Wed Apr 17 21:42:02 2024 -0500[m
+Date:   Wed Apr 17 22:48:04 2024 -0500[m
 [m
-    added log[m
-[K[?1l>[?2004h[gouraram@royal-30] (3)$ make clean
+    finished class headers[m
+[K[?1l>[?2004h[gouraram@royal-30] (3)$ mk[Kake clean
 [?2004lrm -rf *.class
 [?2004h[gouraram@royal-30] (4)$ ls
 [?2004lApp.java               BackendPlaceholder.java  FrontendDeveloperTests.java  Frontend.java             GraphADT.java          log
@@ -39,7 +39,7 @@ Thanks for using JUnit! Support its development at https://junit.org/sponsoring
 [36m├─[0m [36mJUnit Vintage[0m [32m✔[0m
 [36m└─[0m [36mJUnit Platform Suite[0m [32m✔[0m
 
-Test run finished after 21101 ms
+Test run finished after 20946 ms
 [         4 containers found      ]
 [         0 containers skipped    ]
 [         4 containers started    ]
@@ -56,4 +56,4 @@ Test run finished after 21101 ms
 [?2004h[gouraram@royal-30] (6)$ exit
 [?2004lexit
 
-Script done on 2024-04-17 22:41:58-05:00 [COMMAND_EXIT_CODE="0"]
+Script done on 2024-04-17 22:50:05-05:00 [COMMAND_EXIT_CODE="0"]
