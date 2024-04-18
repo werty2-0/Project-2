@@ -19,6 +19,13 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import javafx.scene.text.Font;
 
+/**
+ * This class provides frontend for an application that provides the shortest path between any two buildings on the UW-Madison campus
+ *
+ * @author Parin Gouraram
+ */
+
+
 public class Frontend extends Application implements FrontendInterface{
 
 	private static BackendInterface backend; // maintain a reference to the backend for backend methods

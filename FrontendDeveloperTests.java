@@ -14,6 +14,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.Node;
 
+/**
+ * This class uses unit tests to test the implementation in the Frontend class
+ *
+ * @author Parin Gouraram
+ */
+
 public class FrontendDeveloperTests extends ApplicationTest{
 
 
