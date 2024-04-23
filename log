@@ -1,72 +1,0 @@
-Script started on 2024-04-17 14:38:33-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="80" LINES="24"]
-g[?2004h[kevinr@royal-29] (1)$ git status
-[?2004lOn branch backend
-Your branch is up to date with 'origin/backend'.
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	[31mlog[m
-
-nothing added to commit but untracked files present (use "git add" to track)
-[?2004h[kevinr@royal-29] (2)$ git log -1
-[?2004l[?1h=[33mcommit 985d47302ddaf79df29550aebd2679d0d5a58e01[m[33m ([m[1;36mHEAD -> [m[1;32mbackend[m[33m, [m[1;31morigin/backend[m[33m[m [33m[m[33m[m[1;36m[m[1;32m[m[33m[m[1;31m[m[33m)[m[m
-Author: Kevin Ren <kren34@wisc.edu>[m
-Date:   Wed Apr 17 14:36:05 2024 -0500[m
-[m
-    fixed makefile[m
-[K[?1l>[?2004h[kevinr@royal-29] (3)$ make clean
-[?2004lrm *.class
-[?2004h[kevinr@royal-29] (4)$ ls
-[?2004lApp.java                    campus.dot                GraphADT.java
-BackendDeveloperTests.java  FrontendInterface.java    GraphPlaceholder.java
-BackendInterface.java       FrontendPlaceholder.java  log
-Backend.java                graph1.dot                Makefile
-BackendPlaceholder.java     graph2.dot
-[?2004h[kevinr@royal-29] (5)$ makek run[K[K[K[K[K runTests
-[?2004ljavac Backend.java
-javac -cp .:../junit5.jar BackendDeveloperTests.java
-java -jar ../junit5.jar -cp . -c BackendDeveloperTests
-graph and locations initialized
-finished reading file graph2.dot with 5 locations
-graph and locations initialized
-finished reading file graph2.dot with 5 locations
-graph and locations initialized
-finished reading file graph1.dot with 4 locations
-graph and locations initialized
-finished reading file graph2.dot with 5 locations
-graph and locations initialized
-finished reading file graph2.dot with 5 locations
-graph and locations initialized
-finished reading file campus.dot with 160 locations
-
-Thanks for using JUnit! Support its development at https://junit.org/sponsoring
-
-[36m╷[0m
-[36m├─[0m [36mJUnit Jupiter[0m [32m✔[0m
-[36m│  └─[0m [36mBackendDeveloperTests[0m [32m✔[0m
-[36m│     ├─[0m [34mtestVia()[0m [32m✔[0m
-[36m│     ├─[0m [34mtestList()[0m [32m✔[0m
-[36m│     ├─[0m [34mtestTravelTimes()[0m [32m✔[0m
-[36m│     ├─[0m [34mtestShortestPath()[0m [32m✔[0m
-[36m│     └─[0m [34mtestLoadGraphData()[0m [32m✔[0m
-[36m├─[0m [36mJUnit Vintage[0m [32m✔[0m
-[36m└─[0m [36mJUnit Platform Suite[0m [32m✔[0m
-
-Test run finished after 480 ms
-[         4 containers found      ]
-[         0 containers skipped    ]
-[         4 containers started    ]
-[         0 containers aborted    ]
-[         4 containers successful ]
-[         0 containers failed     ]
-[         5 tests found           ]
-[         0 tests skipped         ]
-[         5 tests started         ]
-[         0 tests aborted         ]
-[         5 tests successful      ]
-[         0 tests failed          ]
-
-[?2004h[kevinr@royal-29] (6)$ exit
-[?2004lexit
-
-Script done on 2024-04-17 14:38:57-05:00 [COMMAND_EXIT_CODE="0"]
