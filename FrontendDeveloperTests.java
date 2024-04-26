@@ -181,6 +181,66 @@ public class FrontendDeveloperTests extends ApplicationTest{
 
 	}
 
+	/**
+	 * This test tests the backend implementation with the useVia feature.
+	 */
+	
+	@Test
+	public void integrationTest1(){
+	        // set backend
+                Frontend.setBackend(new BackendInterface(new GraphPlaceholder()));
+
+                // put correct locations in the start, end, and via location fields
+                clickOn("#start_text").write("Memorial Union");
+                clickOn("#end_text").write("Radio Hall");
+                clickOn("#viaLocation_text").write("Science Hall");
+
+                // get reference to the results of the shortest path
+                VBox pathResult = lookup("#pathResult").query();
+
+                // check the box to use the via location in the path and find the path
+                clickOn("#useVia"); 
+                clickOn("#find");
+
+                // make sure the shortest path has the correct number of locations in it
+                Assertions.assertTrue(4 == pathResult.getChildren().size());
+
+                // make sure each Label in the path is correct
+                String[] expectedResult = {"Path Result:","Memorial Union", "Science Hall", "Radio Hall"}; 
+                for(int i = 0; i < pathResult.getChildren().size();i++){
+                        Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
+                }
+
+	}
+
+	@Test
+	public void integrationTest2(){
+		// set backend
+                Frontend.setBackend(new BackendInterface(new GraphPlaceholder()));    
+
+                // put correct locations in the start and end location fields
+                clickOn("#start_text").write("Union South");
+                clickOn("#end_text").write("Atmospheric, Oceanic and Space Sciences");
+
+                // get reference to the results of the shortst path
+                VBox pathResult = lookup("#pathResult").query();
+
+                // check the show times box so that the shortest path shows the distance between each location in the path in seconds
+                clickOn("#travelTimesBox"); 
+
+                // find the path
+                clickOn("#find");
+
+                // make sure the shortest path has the correct number of locations in it
+                Assertions.assertTrue(5 == pathResult.getChildren().size());
+
+                // make sure each label in the path is corret
+                String[] expectedResult = {"Path Result (With Times):","Union South -> 176.0 secs", "Computer Sciences and Statistics -> 80.0 secs", "Atmospheric, Oceanic and Space Sciences", "To", "Total Time: 256.0 secs"};
+                for(int i = 0; i < pathResult.getChildren().size();i++){
+                        Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
+
+	}
+
 	public static void main(String[] args) {
 		try{
     		ApplicationTest.launch(Frontend.class, args);
