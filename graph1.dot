@@ -1,0 +1,6 @@
+digraph G {
+    "A" -> "B" [seconds=1.0];
+    "A" -> "D" [seconds=3.0];
+    "B" -> "C" [seconds=2.0];
+    "D" -> "A" [seconds=3.0];
+}
