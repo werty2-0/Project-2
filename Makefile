@@ -10,7 +10,7 @@ runApp: App.java
 	javac --module-path ../javafx/lib --add-modules javafx.controls -cp .:../junit5fx.jar App.java
 	java --module-path ../javafx/lib --add-modules javafx.controls -cp .:../junit5fx.jar App.java
 
-runBDTests: Backend.java BackendDeveloperTests.java BackendInterface.java GraphADT.java
+runBDTests: Backend.java BackendDeveloperTests.java BackendInterface.java GraphADT.java	
 	javac Backend.java
 	javac -cp .:../junit5.jar BackendDeveloperTests.java
 	java -jar ../junit5.jar -cp . -c BackendDeveloperTests

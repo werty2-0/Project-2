@@ -18,7 +18,7 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import javafx.scene.text.Font;
-
+import java.io.IOException;
 /**
  * This class provides frontend for an application that provides the shortest path between any two buildings on the UW-Madison campus
  *
@@ -55,7 +55,11 @@ public class Frontend extends Application implements FrontendInterface{
 	 */
 	public static void setBackend(BackendInterface backend) {
     	 	Frontend.backend = backend;
-		backend.loadGraphData("campus.dot");
+		try {
+	       		backend.loadGraphData("campus.dot");
+		} catch (IOException e) {
+			System.out.println("Error leading graph data");
+		}
 	}
 
 	/**

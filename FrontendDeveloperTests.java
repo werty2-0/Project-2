@@ -1,4 +1,3 @@
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.Node;
-
+import java.io.IOException;
+import java.util.Arrays;
 /**
  * This class uses unit tests to test the implementation in the Frontend class
  *
@@ -182,65 +182,106 @@ public class FrontendDeveloperTests extends ApplicationTest{
 	}
 
 	/**
-	 * This test tests the backend implementation with the useVia feature.
+	 * This test tests the backend implementation with the frontend implementation when no text has been entered in the start or end selector and when the useVia and show travel times buttons are selected and when the submit button is presed.
+	 * The results of the path should be no path found.
 	 */
 	
 	@Test
 	public void integrationTest1(){
 	        // set backend
-                Frontend.setBackend(new BackendInterface(new GraphPlaceholder()));
+                Frontend.setBackend(new Backend(new DijkstraGraph()));
 
-                // put correct locations in the start, end, and via location fields
-                clickOn("#start_text").write("Memorial Union");
-                clickOn("#end_text").write("Radio Hall");
-                clickOn("#viaLocation_text").write("Science Hall");
-
+       
                 // get reference to the results of the shortest path
                 VBox pathResult = lookup("#pathResult").query();
 
-                // check the box to use the via location in the path and find the path
-                clickOn("#useVia"); 
+                // check the box to use the via location and show travel times in the path and find the path
+                clickOn("#useVia");
+		clickOn("#travelTimesBox"); 
                 clickOn("#find");
 
+
                 // make sure the shortest path has the correct number of locations in it
-                Assertions.assertTrue(4 == pathResult.getChildren().size());
+                Assertions.assertTrue(2 == pathResult.getChildren().size());
 
                 // make sure each Label in the path is correct
-                String[] expectedResult = {"Path Result:","Memorial Union", "Science Hall", "Radio Hall"}; 
+                String[] expectedResult = {"Path Result (With Times):","No Path Found"}; 
                 for(int i = 0; i < pathResult.getChildren().size();i++){
                         Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
                 }
 
 	}
-
+    	/**
+	 * This test tests my partner's backend implementation with my frontend implementation to test the case when erroneous input is entered in the Via textfield but correect information is enetered in the start and end textfields. 
+	 * The expected result for path should be  path not found.
+	 */
 	@Test
 	public void integrationTest2(){
 		// set backend
-                Frontend.setBackend(new BackendInterface(new GraphPlaceholder()));    
+                Frontend.setBackend(new Backend(new DijkstraGraph()));    
 
                 // put correct locations in the start and end location fields
                 clickOn("#start_text").write("Union South");
-                clickOn("#end_text").write("Atmospheric, Oceanic and Space Sciences");
+                clickOn("#end_text").write("Memorial Union");
 
                 // get reference to the results of the shortst path
                 VBox pathResult = lookup("#pathResult").query();
 
-                // check the show times box so that the shortest path shows the distance between each location in the path in seconds
-                clickOn("#travelTimesBox"); 
+
+		// enter erroneous input for the useVia feature and click button to use Via Location
+		clickOn("#viaLocation_text").write("Science Halfafal");
+		clickOn("#useVia");
 
                 // find the path
                 clickOn("#find");
 
                 // make sure the shortest path has the correct number of locations in it
-                Assertions.assertTrue(5 == pathResult.getChildren().size());
+                Assertions.assertTrue(2 == pathResult.getChildren().size());
 
                 // make sure each label in the path is corret
-                String[] expectedResult = {"Path Result (With Times):","Union South -> 176.0 secs", "Computer Sciences and Statistics -> 80.0 secs", "Atmospheric, Oceanic and Space Sciences", "To", "Total Time: 256.0 secs"};
+                String[] expectedResult = {"Path Result:","No Path Found"};
                 for(int i = 0; i < pathResult.getChildren().size();i++){
                         Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
 
 	}
+	}
 
+
+	/**
+	 * This partner test test's my partner's backend code in its ability for the travel times method to return a empty list if it is given a starting point that is not within the graph.
+	 *
+	 */
+	@Test
+	public void partnerTest1(){
+		// set backend
+		GraphADT<String, Double> graph = new GraphPlaceholder();
+    		BackendInterface backend = new Backend(graph);
+		// load data into graph
+    		try {
+     			backend.loadGraphData("graph2.dot");
+    		} catch (IOException e) {
+      			Assertions.fail("Error loading graph data");
+    		}
+
+		// make sure travel times method returns a empty list when given a faulty starting point
+		Assertions.assertEquals(Arrays.asList(), backend.getTravelTimesOnPath("Z","E"));
+	}	
+
+	/**
+	 * This partner testor test's my partner's backend code in its ability for the loadGraphData method to throw an exception for a faulty file that ends in dot.
+	 *
+	 */
+	@Test
+	public void partnerTest2(){
+		// set backend
+		GraphADT<String, Double> graph = new GraphPlaceholder();
+    		BackendInterface backend = new Backend(graph);
+	
+		// make sure faulty  file will make loadGraphData method throw an exception
+    		Assertions.assertThrows(IOException.class, () -> backend.loadGraphData("graph1112.dot"));
+    	}
+
+	
 	public static void main(String[] args) {
 		try{
     		ApplicationTest.launch(Frontend.class, args);
@@ -249,3 +290,4 @@ public class FrontendDeveloperTests extends ApplicationTest{
 
 
 }
+
