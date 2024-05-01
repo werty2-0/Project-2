@@ -12,6 +12,4 @@ runBDTests: Backend.java BackendDeveloperTests.java BackendInterface.java GraphA
 	javac Backend.java
 	javac -cp .:../junit5.jar BackendDeveloperTests.java
 	java -jar ../junit5.jar -cp . -c BackendDeveloperTests
-clean:
-	rm *.class
 
