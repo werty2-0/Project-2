@@ -19,7 +19,6 @@ import javafx.scene.Node;
  *
  * @author Parin Gouraram
  */
-
 public class FrontendDeveloperTests extends ApplicationTest {
 
 

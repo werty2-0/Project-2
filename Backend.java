@@ -80,7 +80,7 @@ public class Backend implements BackendInterface {
     if (!locations.contains(startLocation) || !locations.contains(endLocation)) {
       return Arrays.asList();
     }
-    return Arrays.asList("A", "D", "B", "E");
+    return graph.shortestPathData(startLocation, endLocation);
   }
 
   /**
@@ -94,7 +94,17 @@ public class Backend implements BackendInterface {
     if (!locations.contains(startLocation) || !locations.contains(endLocation)) {
       return Arrays.asList();
     }
-    return Arrays.asList(4.0, 2.0, 1.0);
+    List<String> path = findShortestPath(startLocation, endLocation);
+    List<Double> travelTimes = new ArrayList<>();
+    // for each edge in the path, get the weight of the edge
+    for (int i = 0; i < path.size() - 1; i++) {
+      try {
+        travelTimes.add(graph.getEdge(path.get(i), path.get(i + 1)));
+      } catch (Exception e) {
+        System.out.println("Error getting edge weight:\n" + e);
+      }
+    }
+    return travelTimes;
   }
 
   /**
@@ -109,7 +119,14 @@ public class Backend implements BackendInterface {
     if (!locations.contains(startLocation) || !locations.contains(via) || !locations.contains(endLocation)) {
       return Arrays.asList();
     }
-    return Arrays.asList("A", "D", "B", "E");
+    List<String> path1 = graph.shortestPathData(startLocation, via);
+    List<String> path2 = graph.shortestPathData(via, endLocation);
+    System.out.println("path1: " + path1);
+    System.out.println("path2: " + path2);
+    // put them together into one path
+    // make sure to NOT add first location in path2 because that would be a duplicate
+    path1.addAll(path2.subList(1, path2.size()));
+    return path1;
   }
 
   /**
@@ -124,7 +141,16 @@ public class Backend implements BackendInterface {
     if (!locations.contains(startLocation) || !locations.contains(via) || !locations.contains(endLocation)) {
       return Arrays.asList();
     }
-    return Arrays.asList(1.0, 10.0);
+    List<String> path = findShortestPathVia(startLocation, via, endLocation);
+    List<Double> travelTimes = new ArrayList<>();
+    for (int i = 0; i < path.size() - 1; i++) {
+      try {
+        travelTimes.add(graph.getEdge(path.get(i), path.get(i + 1)));
+      } catch (Exception e) {
+        System.out.println("Error getting edge weight:\n" + e);
+      }
+    }
+    return travelTimes;
   }
 
 }

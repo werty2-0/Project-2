@@ -13,6 +13,7 @@ public class BackendPlaceholder implements BackendInterface {
   }
 
   public List<String> findShortestPath(String startLocation, String endLocation) {
+    if(!startLocation.equals("Union South") || !endLocation.equals("Atmospheric, Oceanic and Space Sciences")) return Arrays.asList();
     return Arrays.asList("Union South", "Computer Sciences and Statistics", "Atmospheric, Oceanic and Space Sciences");
   }
 

@@ -166,12 +166,12 @@ public class BackendDeveloperTests extends ApplicationTest {
     // find the path
     clickOn("#find");
 
-    // make sure result has the correct number of locations
-    Assertions.assertEquals(4, pathResult.getChildren().size());
+    // make sure result has the correct number of locations, +1 for the title of "Path Result:"
+    Assertions.assertEquals(5, pathResult.getChildren().size());
 
     // make sure every label in the path is correct
-    String[] expectedResult = {"A", "D", "B", "E"};
-    for (int i = 0; i < pathResult.getChildren().size(); i++) {
+    String[] expectedResult = {"Path Result:", "A", "D", "B", "E"};
+    for (int i = 1; i < pathResult.getChildren().size(); i++) {
       Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
     }
   }
@@ -207,6 +207,59 @@ public class BackendDeveloperTests extends ApplicationTest {
       Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
     }
   }
+
+  /**
+   * Verifies that no results appear when no input is given and the submit button is clicked.
+   */
+  @Test
+  public void partnerTest1() {
+    Frontend.setBackend(new BackendPlaceholder(new GraphPlaceholder()));
+
+    // get reference to the results of the shortest path
+    VBox pathResult = lookup("#pathResult").query();
+
+    // find the path
+    clickOn("#find");
+
+    // make sure result has the correct number of locations in it(should only have two labels with the title and the label stating that no path was found)
+    Assertions.assertTrue(2 == pathResult.getChildren().size());
+
+    // make sure every Label in the result path is corerct
+    String[] expectedResult = {"Path Result:", "No Path Found"};
+    for (int i = 0; i < pathResult.getChildren().size(); i++) {
+      Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
+    }
+  }
+
+
+  /**
+   * Tests that results for the shortest path appear when two valid points are inputted with
+   * a valid third location, but the use via checkbox is not checked.
+   */
+  @Test
+  public void partnerTest2() {
+    Frontend.setBackend(new BackendPlaceholder(new GraphPlaceholder()));
+
+    // put correct locations in the start, end, and via location fields
+    clickOn("#start_text").write("Union South");
+    clickOn("#end_text").write("Atmospheric, Oceanic and Space Sciences");
+    clickOn("#viaLocation_text").write("Science Hall");
+
+    // get reference to the results of the shortest path
+    VBox pathResult = lookup("#pathResult").query();
+
+    clickOn("#find");
+
+    // make sure the shortest path has the correct number of locations in it
+    Assertions.assertTrue(4 == pathResult.getChildren().size());
+
+    // make sure each Label in the path is correct
+    String[] expectedResult = {"Path Result:", "Union South", "Computer Sciences and Statistics", "Atmospheric, Oceanic and Space Sciences"};
+    for (int i = 0; i < pathResult.getChildren().size(); i++) {
+      Assertions.assertEquals(expectedResult[i], ((Label) pathResult.getChildren().get(i)).getText());
+    }
+  }
+
 
   private GraphADT<String, Double> lectureGraph() {
     GraphADT<String, Double> graph = new GraphPlaceholder();

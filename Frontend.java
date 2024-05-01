@@ -9,18 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
-
 import java.util.List;
-
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
-
 import java.util.ArrayList;
-
 import javafx.scene.text.Font;
 
 /**
@@ -28,8 +24,6 @@ import javafx.scene.text.Font;
  *
  * @author Parin Gouraram
  */
-
-
 public class Frontend extends Application implements FrontendInterface {
 
   private static BackendInterface backend; // maintain a reference to the backend for backend methods
@@ -59,6 +53,11 @@ public class Frontend extends Application implements FrontendInterface {
    */
   public static void setBackend(BackendInterface backend) {
     Frontend.backend = backend;
+    try {
+      backend.loadGraphData("src/graph2.dot");
+    } catch (Exception e) {
+      System.out.println("Error loading graph data");
+    }
   }
 
   /**
@@ -310,6 +309,7 @@ public class Frontend extends Application implements FrontendInterface {
     // create quit button
     Button quit = new Button("Quit");
     quit.setOnAction(e -> Platform.exit());
+    quit.setId("quitButton");
     appControls.getChildren().add(quit);
 
     // create about button
@@ -327,5 +327,5 @@ public class Frontend extends Application implements FrontendInterface {
     aboutSection.setFont(new Font("Arial", 8));
     appControls.getChildren().add(aboutSection);
   }
-
+    
 }
