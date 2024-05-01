@@ -6,7 +6,9 @@ runTests: Frontend.java FrontendDeveloperTests.java BackendPlaceholder.java
 
 clean:
 	rm -rf *.class
-
+runApp: App.java
+	javac --module-path ../javafx/lib --add-modules javafx.controls -cp .:../junit5fx.jar App.java
+	java --module-path ../javafx/lib --add-modules javafx.controls -cp .:../junit5fx.jar App.java
 
 runBDTests: Backend.java BackendDeveloperTests.java BackendInterface.java GraphADT.java
 	javac Backend.java

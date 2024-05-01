@@ -55,6 +55,7 @@ public class Frontend extends Application implements FrontendInterface{
 	 */
 	public static void setBackend(BackendInterface backend) {
     	 	Frontend.backend = backend;
+		backend.loadGraphData("campus.dot");
 	}
 
 	/**
