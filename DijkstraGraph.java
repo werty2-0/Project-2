@@ -93,7 +93,6 @@ public class DijkstraGraph<NodeType, EdgeType extends Number> extends BaseGraph<
     // if new distance is less than that node's shortest distance so far, update it
     // also set the neighbor node's previous node to current node
     while (!pq.isEmpty()) {
-      System.out.println("node " + pq.peek().node.data + " polled from " + string(pq));
       SearchNode current = pq.poll(); // node with the cheapest cost
       if (current.node.data.equals(end)) {
         System.out.println("We are done\n");
@@ -160,7 +159,12 @@ public class DijkstraGraph<NodeType, EdgeType extends Number> extends BaseGraph<
 
     List<NodeType> path = new LinkedList<>();
 
-    SearchNode current = computeShortestPath(start, end);
+    SearchNode current;
+    try {
+      current = computeShortestPath(start, end);
+    } catch (NoSuchElementException e) {
+      throw new NoSuchElementException("No path found");
+    }
 
     while (current != null) {
       path.add(0, current.node.data);
@@ -185,7 +189,12 @@ public class DijkstraGraph<NodeType, EdgeType extends Number> extends BaseGraph<
       throw new NoSuchElementException("Start or end node does not exist");
     }
 
-    SearchNode endNode = computeShortestPath(start, end);
+    SearchNode endNode;
+    try {
+      endNode = computeShortestPath(start, end);
+    } catch (NoSuchElementException e) {
+      throw new NoSuchElementException("No path found");
+    }
 
     return endNode.cost;
   }

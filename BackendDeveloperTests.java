@@ -47,7 +47,7 @@ public class BackendDeveloperTests extends ApplicationTest {
    */
   @Test
   public void testList() {
-    GraphADT<String, Double> graph = new GraphPlaceholder();
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
     // now create a backend, remember to replace it with the actual Backend object and not the placeholder
     BackendInterface backend = new Backend(graph);
     try {
@@ -70,7 +70,7 @@ public class BackendDeveloperTests extends ApplicationTest {
   @Test
   public void testShortestPath() {
     // create a graph and add some locations
-    GraphADT<String, Double> graph = new GraphPlaceholder();
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
     BackendInterface backend = new Backend(graph);
     try {
       backend.loadGraphData("graph2.dot");
@@ -88,7 +88,7 @@ public class BackendDeveloperTests extends ApplicationTest {
    */
   @Test
   public void testTravelTimes() {
-    GraphADT<String, Double> graph = new GraphPlaceholder();
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
 
     BackendInterface backend = new Backend(graph);
     try {
@@ -106,7 +106,7 @@ public class BackendDeveloperTests extends ApplicationTest {
    */
   @Test
   public void testVia() {
-    GraphADT<String, Double> graph1 = new GraphPlaceholder();
+    GraphADT<String, Double> graph1 = new DijkstraGraph<>();
     // test findShortestPathVia
     BackendInterface backend1 = new Backend(graph1);
     try {
@@ -121,7 +121,7 @@ public class BackendDeveloperTests extends ApplicationTest {
     Assertions.assertEquals(Arrays.asList(), backend1.findShortestPathVia("A", "F", "E"));
 
     // then test getTravelTimesOnPathVia with a new graph
-    GraphADT<String, Double> graph2 = new GraphPlaceholder();
+    GraphADT<String, Double> graph2 = new DijkstraGraph<>();
     BackendInterface backend2 = new Backend(graph2);
     try {
       backend2.loadGraphData("graph2.dot");
@@ -131,7 +131,7 @@ public class BackendDeveloperTests extends ApplicationTest {
     // now test the via travel times method
     // create a path and check the travel times
     backend2.findShortestPathVia("A", "C", "E");
-    Assertions.assertEquals(Arrays.asList(1.0, 10.0), backend2.getTravelTimesOnPathVia("A", "C", "E"));
+    Assertions.assertEquals(Arrays.asList(1.0, 1.0, 4.0, 2.0, 1.0), backend2.getTravelTimesOnPathVia("A", "C", "E"));
     // once again, ensure an empty list is returned for a path that doesn't exist
     Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("A", "B", "G"));
     Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("A", "P", "E"));
@@ -141,17 +141,18 @@ public class BackendDeveloperTests extends ApplicationTest {
 
   /**
    * Test method for the integration of the Backend and Frontend classes. Ensures that
-   * the correct path is found when the input is entered and the find button is pressed.
+   * the backend and frontend harmoniously and seamlessly integrate, and that the
+   * correct path is found when the input is entered and the find button is pressed.
    */
   @Test
   public void testIntegration1() {
     // set backend
-    GraphADT<String, Double> graph = new GraphPlaceholder();
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
     BackendInterface backend = new Backend(graph);
 
     Frontend.setBackend(backend);
     try {
-      backend.loadGraphData("src/graph2.dot");
+      backend.loadGraphData("graph2.dot");
     } catch (IOException e) {
       Assertions.fail("Error loading graph data, not caused by findShortestPath method");
     }
@@ -178,12 +179,13 @@ public class BackendDeveloperTests extends ApplicationTest {
 
   /**
    * Test method for the integration of the Backend and Frontend classes. Ensures that
-   * the backend correctly handles invalid point inputs, and the frontend displays the
+   * the backend and frontend harmoniously and seamlessly integrate, and that the
+   * backend correctly handles invalid point inputs, and the frontend displays the
    * correct output when the submit button is pressed.
    */
   @Test
   public void testIntegration2() {
-    GraphADT<String, Double> graph = new GraphPlaceholder();
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
     BackendInterface backend = new Backend(graph);
 
     Frontend.setBackend(backend);
@@ -213,7 +215,7 @@ public class BackendDeveloperTests extends ApplicationTest {
    */
   @Test
   public void partnerTest1() {
-    Frontend.setBackend(new BackendPlaceholder(new GraphPlaceholder()));
+    Frontend.setBackend(new BackendPlaceholder(new DijkstraGraph<>()));
 
     // get reference to the results of the shortest path
     VBox pathResult = lookup("#pathResult").query();
@@ -238,7 +240,7 @@ public class BackendDeveloperTests extends ApplicationTest {
    */
   @Test
   public void partnerTest2() {
-    Frontend.setBackend(new BackendPlaceholder(new GraphPlaceholder()));
+    Frontend.setBackend(new BackendPlaceholder(new DijkstraGraph<>()));
 
     // put correct locations in the start, end, and via location fields
     clickOn("#start_text").write("Union South");

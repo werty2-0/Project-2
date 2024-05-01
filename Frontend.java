@@ -54,7 +54,7 @@ public class Frontend extends Application implements FrontendInterface {
   public static void setBackend(BackendInterface backend) {
     Frontend.backend = backend;
     try {
-      backend.loadGraphData("src/graph2.dot");
+      backend.loadGraphData("campus.dot");
     } catch (Exception e) {
       System.out.println("Error loading graph data");
     }
