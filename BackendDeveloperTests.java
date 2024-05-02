@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.List;
  * Testers for the Backend class. These tests are designed to test the Backend class and its methods.
  */
 public class BackendDeveloperTests {
+
 
   /**
    * Additional test method for the loadGraphData method in the BackendInterface.
@@ -35,7 +37,7 @@ public class BackendDeveloperTests {
    */
   @Test
   public void testList() {
-    GraphADT<String, Double> graph = new GraphPlaceholder();
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
     // now create a backend, remember to replace it with the actual Backend object and not the placeholder
     BackendInterface backend = new Backend(graph);
     try {
@@ -58,8 +60,8 @@ public class BackendDeveloperTests {
   @Test
   public void testShortestPath() {
     // create a graph and add some locations
-    GraphADT<String, Double> graph = new GraphPlaceholder();
-    BackendInterface backend = new Backend(graph); // verify with TA that we replace with Backend ??
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
+    BackendInterface backend = new Backend(graph);
     try {
       backend.loadGraphData("graph2.dot");
     } catch (IOException e) {
@@ -76,7 +78,7 @@ public class BackendDeveloperTests {
    */
   @Test
   public void testTravelTimes() {
-    GraphADT<String, Double> graph = new GraphPlaceholder();
+    GraphADT<String, Double> graph = new DijkstraGraph<>();
 
     BackendInterface backend = new Backend(graph);
     try {
@@ -94,7 +96,7 @@ public class BackendDeveloperTests {
    */
   @Test
   public void testVia() {
-    GraphADT<String, Double> graph1 = new GraphPlaceholder();
+    GraphADT<String, Double> graph1 = new DijkstraGraph<>();
     // test findShortestPathVia
     BackendInterface backend1 = new Backend(graph1);
     try {
@@ -109,7 +111,7 @@ public class BackendDeveloperTests {
     Assertions.assertEquals(Arrays.asList(), backend1.findShortestPathVia("A", "F", "E"));
 
     // then test getTravelTimesOnPathVia with a new graph
-    GraphADT<String, Double> graph2 = new GraphPlaceholder();
+    GraphADT<String, Double> graph2 = new DijkstraGraph<>();
     BackendInterface backend2 = new Backend(graph2);
     try {
       backend2.loadGraphData("graph2.dot");
@@ -119,12 +121,16 @@ public class BackendDeveloperTests {
     // now test the via travel times method
     // create a path and check the travel times
     backend2.findShortestPathVia("A", "C", "E");
-    Assertions.assertEquals(Arrays.asList(1.0, 10.0), backend2.getTravelTimesOnPathVia("A", "C", "E"));
+    Assertions.assertEquals(Arrays.asList(1.0, 1.0, 4.0, 2.0, 1.0), backend2.getTravelTimesOnPathVia("A", "C", "E"));
     // once again, ensure an empty list is returned for a path that doesn't exist
     Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("A", "B", "G"));
     Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("A", "P", "E"));
     Assertions.assertEquals(Arrays.asList(), backend2.getTravelTimesOnPathVia("G", "B", "P"));
   }
+
+
+
+
 
   private GraphADT<String, Double> lectureGraph() {
     GraphADT<String, Double> graph = new GraphPlaceholder();
@@ -161,3 +167,4 @@ public class BackendDeveloperTests {
 
 
 }
+
